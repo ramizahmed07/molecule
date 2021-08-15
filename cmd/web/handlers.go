@@ -2,19 +2,16 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
-	message := "Hello, Ramiz!"
-
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
 	}
-
+	message := "Hello, Ramiz!"
 	w.Write([]byte(message))
 }
 
@@ -37,16 +34,4 @@ func createMolecule(w http.ResponseWriter, r *http.Request) {
 	}
 	message := "Creating a new molecule\n"
 	w.Write([]byte(message))
-}
-
-func main() {
-
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", home)
-	mux.HandleFunc("/molecule", showMolecule)
-	mux.HandleFunc("/molecule/create", createMolecule)
-
-	log.Println("Starting server on :4000")
-	err := http.ListenAndServe(":4000", mux)
-	log.Fatal(err)
 }
