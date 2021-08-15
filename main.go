@@ -23,11 +23,12 @@ func showMolecule(w http.ResponseWriter, r *http.Request) {
 
 func createMolecule(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
+		w.Header().Set("Allow", "POST")
 		w.WriteHeader(405)
 		w.Write([]byte("Method Not Allowed"))
 		return
 	}
-	message := "Creating a new molecule"
+	message := "Creating a new molecule\n"
 	w.Write([]byte(message))
 }
 
