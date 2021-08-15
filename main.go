@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -17,14 +19,18 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func showMolecule(w http.ResponseWriter, r *http.Request) {
-	message := "Show molecule"
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil || id < 1 {
+		http.NotFound(w, r)
+		return
+	}
+	message := fmt.Sprintf("Show molecule with ID %d", id)
 	w.Write([]byte(message))
 }
 
 func createMolecule(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		w.Header().Set("Allow", "POST")
-		// http.status
 		const code = 405
 		http.Error(w, "Method Not Allowed", code)
 		return
