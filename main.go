@@ -7,6 +7,12 @@ import (
 
 func home(w http.ResponseWriter, r *http.Request) {
 	message := "Hello, Ramiz!"
+
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+
 	w.Write([]byte(message))
 }
 
